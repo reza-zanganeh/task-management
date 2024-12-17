@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken")
 const projectConfig = require("../../config/index")
-const { createError } = require("../helpers/Functions")
-const { BadRequest } = require("../helpers/HttpResponse")
+const { createError } = require("../helper/Functions")
+const { BadRequest } = require("../helper/HttpResponse")
 module.exports.isValidVerifyOtpToken = async (req, res, next) => {
   try {
     const token = req.headers?.otptoken

@@ -19,6 +19,8 @@ model User {
   phonenumber String @unique @db.VarChar(11)
   password    String
   tasks       Task[]
+
+  @@index([phonenumber])
 }
 
 model Task {

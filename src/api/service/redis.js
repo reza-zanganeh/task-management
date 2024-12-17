@@ -45,7 +45,7 @@ module.exports.setRequestToLoginOnRedis = async (phonenumber) => {
   return await setOnRedis(
     `${REQUESTTOLOGIN}_${phonenumber}`,
     "",
-    projectConfig.authentication.applicationActiveTimeInMinutes
+    projectConfig.authentication.otpCodeExpiresTimeInMinutes
   )
 }
 
@@ -57,7 +57,7 @@ module.exports.setOtpCodeOnRedis = async (phonenumber, code) => {
   return await setOnRedis(
     `${OTPCODEKEY}_${phonenumber}`,
     code,
-    projectConfig.authentication.applicationActiveTimeInMinutes
+    projectConfig.authentication.otpCodeExpiresTimeInMinutes
   )
 }
 
@@ -96,7 +96,7 @@ module.exports.setForgetPasswordRequestOnRedis = async (phonenumber) => {
   return await setOnRedis(
     `${FORGETPASSWORD}_${phonenumber}`,
     "",
-    projectConfig.authentication.applicationActiveTimeInMinutes
+    projectConfig.authentication.otpCodeExpiresTimeInMinutes
   )
 }
 

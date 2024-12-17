@@ -6,11 +6,6 @@ const authentication = {
   otpCodeExpiresTimeInMinutes: 4,
 }
 
-const captcha = {
-  length: 6,
-  tokenKey: "a04beb0937024a0428c8956ed6f77a64040687ee1f6998604d9d27cef962319e",
-}
-
 const otpCode = {
   minimum: 10000,
   maximum: 100000,
@@ -22,9 +17,16 @@ const invalidPasswordOrCode = {
   expiresTimeInMinutes: 5,
 }
 
+const farazSMS = {
+  sendSMSWithPaternURL: "http://ippanel.com/api/select",
+  user: "u09391825987",
+  password: "Faraz@1819970925667412",
+  fromNumber: "3000505",
+}
+
 module.exports = {
   authentication,
-  captcha,
   otpCode,
   invalidPasswordOrCode,
+  farazSMS,
 }

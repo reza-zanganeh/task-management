@@ -13,20 +13,9 @@ module.exports.createError = ({ statusCode, message }) => {
   return error
 }
 
-module.exports.createOtpCodeToken = (phonenumber, isUserExists) => {
-  const token = jwt.sign(
-    { phonenumber, isUserExists },
-    projectConfig.otpCode.tokenKey,
-    {
-      expiresIn: `${projectConfig.authentication.applicationActiveTimeInMinutes}m`,
-    }
-  )
-  return token
-}
-
-module.exports.createCaptchaToken = (text) => {
-  const token = jwt.sign({ text }, projectConfig.captcha.tokenKey, {
-    expiresIn: `${projectConfig.authentication.applicationActiveTimeInMinutes}m`,
+module.exports.createOtpCodeToken = (phonenumber) => {
+  const token = jwt.sign({ phonenumber }, projectConfig.otpCode.tokenKey, {
+    expiresIn: `${projectConfig.authentication.otpCodeExpiresTimeInMinutes}m`,
   })
   return token
 }

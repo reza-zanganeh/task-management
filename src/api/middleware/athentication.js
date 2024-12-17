@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken")
 const projectConfig = require("../../config/index")
-const { Unauthorized } = require("../helpers/HttpResponse")
-const { createError } = require("../helpers/Functions")
+const { Unauthorized } = require("../helper/HttpResponse")
+const { createError } = require("../helper/Functions")
 
 module.exports.isAuthenticate = async (req, res, next) => {
   const token = req.headers?.accesstoken

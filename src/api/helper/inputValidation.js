@@ -1,5 +1,5 @@
 const { empty, invalid, limitLegth } = require("./validationMessage")
-const { readOne } = require("../helpers/prisma")
+const { readOne } = require("../helper/prisma")
 
 module.exports.email = (location) => ({
   in: [location],

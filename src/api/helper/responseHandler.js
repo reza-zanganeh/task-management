@@ -2,7 +2,6 @@ const { appendFile } = require("fs")
 const { join } = require("path")
 const persianDate = require("persian-date").toLocale("fa")
 const projectConfig = require("../../config/index")
-
 const { validationResult } = require("express-validator")
 const {
   InternalServerError,
