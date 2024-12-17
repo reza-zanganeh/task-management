@@ -104,65 +104,6 @@ module.exports.isDecimal = (fieldName, location) => ({
   },
 })
 
-module.exports.fileType = (location) => ({
-  in: [location],
-  exists: {
-    bail: true,
-    options: {
-      checkFalsy: true,
-      checkNull: true,
-    },
-    errorMessage: empty("نوع فایل"),
-  },
-  custom: {
-    options: (value) => {
-      return value === "jpeg" || value === "png"
-    },
-    errorMessage: "فقط از فایل با نوع jpeg | png پشتیبانی می کنیم",
-  },
-})
-
-module.exports.fileSize = (location) => ({
-  in: [location],
-  exists: {
-    bail: true,
-    options: {
-      checkFalsy: true,
-      checkNull: true,
-    },
-    errorMessage: empty("سایز فایل"),
-  },
-  custom: {
-    options: (value) => {
-      return value < 128
-    },
-    errorMessage: "سایز فایل حداکثر باید 128 کیلوبایت باشد",
-  },
-})
-
-module.exports.fileName = (location) => ({
-  in: [location],
-  exists: {
-    bail: true,
-    options: {
-      checkFalsy: true,
-      checkNull: true,
-    },
-    errorMessage: empty("نام فایل"),
-  },
-  custom: {
-    options: (value, { req }) => {
-      if (
-        (req.body.fileType === "jpeg" || req.body.fileType === "png") &&
-        value.endsWith("." + req.body.fileType)
-      )
-        return true
-      else return false
-    },
-    errorMessage: "( jpeg || png ) نام فایل باید بهمراه نوع ان باشد",
-  },
-})
-
 module.exports.inArray = (fieldName, location, array) => ({
   in: [location],
   exists: {
@@ -179,19 +120,50 @@ module.exports.inArray = (fieldName, location, array) => ({
   },
 })
 
-module.exports.between = (fieldName, location, min, max) => ({
+module.exports.between = (
+  fieldName,
+  location,
+  min,
+  max,
+  checkIsExists = true
+) => ({
   in: [location],
-  exists: {
-    bail: true,
-    options: {
+  ...(checkIsExists && {
+    exists: {
+      bail: true,
+      options: {
+        checkNull: true,
+      },
+      errorMessage: empty(fieldName),
       checkNull: true,
     },
-    errorMessage: empty(fieldName),
-    checkNull: true,
-  },
+  }),
   custom: {
     options: (value) => value >= min && value <= max,
     errorMessage: `مقدار ${fieldName} باید بین ${min} و ${max} باشد`,
+  },
+})
+
+module.exports.isGreateThan = (
+  fieldName,
+  location,
+  min,
+  checkIsExists = true
+) => ({
+  in: [location],
+  ...(checkIsExists && {
+    exists: {
+      bail: true,
+      options: {
+        checkNull: true,
+      },
+      errorMessage: empty(fieldName),
+      checkNull: true,
+    },
+  }),
+  custom: {
+    options: (value) => value >= min,
+    errorMessage: `مقدار ${fieldName} باید بزرگتر از ${min} باشد`,
   },
 })
 
@@ -240,8 +212,7 @@ module.exports.checkExistsObjectWithIdInDb = (
   },
 })
 
-// TODO
-module.exports.isBirthday = (fieldName, location) => ({
+module.exports.isForwardDate = (fieldName, location) => ({
   in: [location],
   exists: {
     bail: true,
@@ -251,16 +222,30 @@ module.exports.isBirthday = (fieldName, location) => ({
     errorMessage: empty(fieldName),
     checkNull: true,
   },
+  isDate: {
+    bail: true,
+    errorMessage: invalid(fieldName),
+    options: {
+      strict: true,
+    },
+  },
   custom: {
     options: (date) => {
-      if (isNaN(+date)) {
-        return false
-      }
-      const diffYearsInputDateAndNow =
-        (new Date().getTime() - date) / 31536000000
-      if (diffYearsInputDateAndNow <= 2) return false
+      const now = new Date()
+      if (new Date(date) <= now) return false
       return true
     },
-    errorMessage: `timestamp وارد شده برای ${fieldName} معتبر نمی باشد`,
+    errorMessage: "تاریخ وارد شده برای گذشته می باشد",
+  },
+})
+
+module.exports.isDate = (fieldName, location) => ({
+  in: [location],
+  isDate: {
+    bail: true,
+    errorMessage: invalid(fieldName),
+    options: {
+      strict: true,
+    },
   },
 })

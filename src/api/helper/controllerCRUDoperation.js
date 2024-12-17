@@ -1,20 +1,11 @@
-const { modelName } = require("../../../config/constant")
 const { createError } = require("./Functions")
 const {
   resposeHandler,
   internalServerErrorHandler,
 } = require("./responseHandler")
-const { Created, Ok, BadRequest, emptyMesssage } = require("./HttpResponse")
+const { Created, BadRequest } = require("./HttpResponse")
 
-const {
-  create,
-  readWithPaginationOrId,
-  update,
-  remove,
-  readOne,
-  readAll,
-  readRecordsSortedByDateWithPagination,
-} = require("./prisma")
+const { create, update, remove } = require("./prisma")
 
 const createController = async (
   MODELNAME,
@@ -44,74 +35,6 @@ const createController = async (
         )
       )
     }
-    internalServerErrorHandler(next, error)
-  }
-}
-
-const readWithIdController = async (MODELNAME, req, res, next) => {
-  try {
-    const id = +req.params.id
-    const record = Number.isInteger(id)
-      ? await readOne(MODELNAME.english, { id: +id })
-      : null
-    if (!record)
-      return resposeHandler(
-        res,
-        record,
-        Ok({
-          message: `${MODELNAME.persian} مورد نظر با آیدی ارسال شده یافت نشد`,
-        })
-      )
-
-    resposeHandler(
-      res,
-      record,
-      Ok({ operationName: `خواندن ${MODELNAME.persian}` })
-    )
-  } catch (error) {
-    internalServerErrorHandler(next, error)
-  }
-}
-
-const readController = async (MODELNAME, req, res, next) => {
-  try {
-    const { id, page } = req.query
-    const records = await readWithPaginationOrId(MODELNAME.english, +id, page)
-    resposeHandler(res, records, emptyMesssage())
-  } catch (error) {
-    internalServerErrorHandler(next, error)
-  }
-}
-
-const readAllController = async (MODELNAME, req, res, next) => {
-  try {
-    const records = await readAll(MODELNAME.english)
-    resposeHandler(res, records, emptyMesssage())
-  } catch (error) {
-    internalServerErrorHandler(next, error)
-  }
-}
-
-const readRecordsSortedByDateWithPaginationController = async (
-  MODELNAME,
-  take,
-  req,
-  res,
-  next
-) => {
-  try {
-    const page = req.query.page || 1
-    const orderByKey = req.query.orderBy || "id"
-    const orderBy = {}
-    orderBy[orderByKey] = "asc"
-    const records = await readRecordsSortedByDateWithPagination(
-      MODELNAME.english,
-      take,
-      page,
-      orderBy
-    )
-    resposeHandler(res, records, emptyMesssage())
-  } catch (error) {
     internalServerErrorHandler(next, error)
   }
 }
@@ -156,13 +79,34 @@ const deleteController = async (MODELNAME, req, res, next) => {
   }
 }
 
+const readByIdController = async (MODELNAME, req, res, next) => {
+  try {
+    const id = +req.params.id
+    const record = Number.isInteger(id)
+      ? await readOne(MODELNAME.english, { id: +id })
+      : null
+    if (!record)
+      return resposeHandler(
+        res,
+        record,
+        Ok({
+          message: `${MODELNAME.persian} مورد نظر با آیدی ارسال شده یافت نشد`,
+        })
+      )
+
+    resposeHandler(
+      res,
+      record,
+      Ok({ operationName: `خواندن ${MODELNAME.persian}` })
+    )
+  } catch (error) {
+    internalServerErrorHandler(next, error)
+  }
+}
+
 module.exports = (MODELNAME) => ({
   createController: createController.bind(null, MODELNAME),
-  readController: readController.bind(null, MODELNAME),
-  readRecordsSortedByDateWithPaginationController:
-    readRecordsSortedByDateWithPaginationController.bind(null, MODELNAME),
   updateConrtoller: updateConrtoller.bind(null, MODELNAME),
   deleteController: deleteController.bind(null, MODELNAME),
-  readWithIdController: readWithIdController.bind(null, MODELNAME),
-  readAllController: readAllController.bind(null, MODELNAME),
+  readByIdController: readByIdController.bind(null, MODELNAME),
 })
