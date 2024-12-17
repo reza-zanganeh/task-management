@@ -1,0 +1,30 @@
+{
+  "name": "task-management-api",
+  "version": "1.0.0",
+  "description": "A simple project for Bad Saba company interview",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon --ignore src/api/v1/log/internalServerError.log src/api/v1/app.js",
+    "start": "node src/api/v1/app.js",
+    "build": "npx prisma generate"
+  },
+  "author": "reza.zanganeh.sani",
+  "license": "ISC",
+  "devDependencies": {
+    "prisma": "^6.0.1"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.0.1",
+    "axios": "^1.7.9",
+    "compression": "^1.7.5",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-validator": "^7.2.0",
+    "jsonwebtoken": "^9.0.2",
+    "nodemon": "^3.1.9",
+    "persian-date": "^1.1.0",
+    "redis": "^4.7.0",
+    "svg-captcha": "^1.4.0"
+  }
+}
