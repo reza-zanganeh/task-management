@@ -45,12 +45,18 @@ module.exports.readTaskSV = {
   page: isGreateThan("شماره صفحه", "query", 0, false),
 }
 
-// update
-// status
-// title
-// descrition
-// deadline
-// remove task
+module.exports.updateTaskSV = {
+  title: isString("عنوان تسک", "body", false),
+  description: isString("توضیحات تسک", "body", false),
+  status: inArray(
+    "وضعیت تسک",
+    "body",
+    ["Pending", "InProgress", "Completed"],
+    false
+  ),
+  deadline: isForwardDate("زمان پایان انجام تسک", "body", false),
+}
+
 module.exports.deleteTaskSV = {
   id: checkExistsObjectWithIdInDb(taskModelName, "params"),
 }

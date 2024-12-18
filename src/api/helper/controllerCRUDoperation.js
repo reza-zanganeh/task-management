@@ -42,10 +42,11 @@ const createController = async (
 const updateConrtoller = async (MODELNAME, dataSchema, req, res, next) => {
   try {
     const { id } = req.params
+    const reqBody = req.body
     const data = {}
-    dataSchema.forEach((item) => {
-      data[item] = req.body[item]
-    })
+    for (const [key, value] of Object.entries(reqBody)) {
+      if (dataSchema.includes(key)) data[key] = value
+    }
     const updatedRecord = await update(MODELNAME.english, { id: +id }, data)
     resposeHandler(
       res,
@@ -65,7 +66,11 @@ const deleteController = async (MODELNAME, req, res, next) => {
   try {
     const { id } = req.params
     const deletedRecord = await remove(MODELNAME.english, { id: +id })
-    resposeHandler(res, deletedRecord, Created(`حذف ${MODELNAME.persian}`))
+    resposeHandler(
+      res,
+      deletedRecord,
+      Ok({ operationName: `حذف ${MODELNAME.persian}` })
+    )
   } catch (error) {
     if (error.code === "P2025")
       return next(

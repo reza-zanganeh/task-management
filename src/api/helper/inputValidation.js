@@ -2,24 +2,8 @@ const { empty, invalid, limitLegth } = require("./validationMessage")
 const { readOne } = require("../helper/prisma")
 const { isValidDate } = require("./Functions")
 
-module.exports.email = (location) => ({
-  in: [location],
-  exists: {
-    bail: true,
-    options: {
-      checkFalsy: true,
-      checkNull: true,
-    },
-    errorMessage: empty("ادرس الکترونیک"),
-  },
-  isEmail: {
-    bail: true,
-    errorMessage: invalid("ادرس الکترونیک"),
-  },
-})
-
 module.exports.phonenumber = (location) => ({
-  in: ["body"],
+  in: [location],
   exists: {
     bail: true,
     options: {
@@ -36,7 +20,6 @@ module.exports.phonenumber = (location) => ({
   },
 })
 
-// TODO strong password regex
 module.exports.password = (location) => ({
   in: [location],
   exists: {
@@ -97,12 +80,9 @@ module.exports.isString = (fieldName, location, checkIsExists = true) => ({
       checkNull: true,
     },
   }),
-  isString: {
-    bail: true,
+  custom: {
+    options: (value) => typeof value === "string" || (!checkIsExists && !value),
     errorMessage: invalid(fieldName),
-    options: {
-      strict: true,
-    },
   },
 })
 
@@ -116,7 +96,6 @@ module.exports.isDecimal = (fieldName, location) => ({
     errorMessage: empty(fieldName),
     checkNull: true,
   },
-
   isDecimal: {
     bail: true,
     errorMessage: invalid(fieldName),
@@ -168,7 +147,8 @@ module.exports.between = (
     },
   }),
   custom: {
-    options: (value) => value >= min && value <= max,
+    options: (value) =>
+      (value >= min && value <= max) || (!checkIsExists && !value),
     errorMessage: `مقدار ${fieldName} باید بین ${min} و ${max} باشد`,
   },
 })
@@ -191,24 +171,8 @@ module.exports.isGreateThan = (
     },
   }),
   custom: {
-    options: (value) => value >= min || !value,
+    options: (value) => value >= min || (!checkIsExists && !value),
     errorMessage: `مقدار ${fieldName} باید بزرگتر از ${min} باشد`,
-  },
-})
-
-module.exports.stringLengthBetween = (fieldName, location, min, max) => ({
-  in: [location],
-  exists: {
-    bail: true,
-    options: {
-      checkNull: true,
-    },
-    errorMessage: empty(fieldName),
-    checkNull: true,
-  },
-  custom: {
-    options: (value) => value.length >= min && value.length <= max,
-    errorMessage: `مقدار ${fieldName} باید بین ${min} و ${max} باشد`,
   },
 })
 
@@ -241,18 +205,21 @@ module.exports.checkExistsObjectWithIdInDb = (
   },
 })
 
-module.exports.isForwardDate = (fieldName, location) => ({
+module.exports.isForwardDate = (fieldName, location, checkIsExists = true) => ({
   in: [location],
-  exists: {
-    bail: true,
-    options: {
+  ...(checkIsExists && {
+    exists: {
+      bail: true,
+      options: {
+        checkNull: true,
+      },
+      errorMessage: empty(fieldName),
       checkNull: true,
     },
-    errorMessage: empty(fieldName),
-    checkNull: true,
-  },
+  }),
   custom: {
     options: (date) => {
+      if (!checkIsExists && !date) return true
       if (!isValidDate(date))
         return Promise.reject(" تاریخ وارد شده معتبر نمی باشد")
       const now = new Date()

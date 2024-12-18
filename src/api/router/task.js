@@ -7,9 +7,15 @@ const {
   createController: createTask,
   deleteController: deleteTask,
   readByIdController: readTaskById,
+  updateConrtoller: updateTaskById,
 } = require("../helper/controllerCRUDoperation")(taskModelName)
 const { hasAccessToTask } = require("../middleware/accessControl")
-const { createTaskSV, readTaskSV, deleteTaskSV } = require("../validation/task")
+const {
+  createTaskSV,
+  readTaskSV,
+  deleteTaskSV,
+  updateTaskSV,
+} = require("../validation/task")
 const { readTasks } = require("../controller/task")
 
 const taskRouter = express.Router()
@@ -35,11 +41,19 @@ taskRouter.post(
 )
 
 taskRouter.delete(
-  "/",
+  "/:id",
   hasAccessToTask,
   checkSchema(deleteTaskSV),
   expressValidationResultHandler,
   deleteTask
+)
+
+taskRouter.patch(
+  "/:id",
+  hasAccessToTask,
+  checkSchema(updateTaskSV),
+  expressValidationResultHandler,
+  updateTaskById.bind(null, ["title", "description", "status", "deadline"])
 )
 
 module.exports.taskRouter = taskRouter

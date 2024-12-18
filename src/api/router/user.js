@@ -47,7 +47,7 @@ userRouter.post(
 
 userRouter.post("/forget-password", isValidVerifyOtpToken, forgetPassword)
 
-userRouter.post(
+userRouter.patch(
   "/change-password",
   isAuthenticate,
   checkSchema(changePasswordSV),
