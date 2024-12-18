@@ -24,14 +24,9 @@ module.exports.readOne = async (modelName, where, select) => {
   }
 }
 
-module.exports.readAll = async (modelName, where, select) => {
+module.exports.readAll = async (modelName, query) => {
   try {
-    let result
-    if (where && select)
-      result = await prisma[modelName].findMany({ where, select })
-    else if (where) result = await prisma[modelName].findMany({ where })
-    else if (select) result = await prisma[modelName].findMany({ select })
-    else result = await prisma[modelName].findMany()
+    const result = await prisma[modelName].findMany(query)
     return result
   } catch (error) {
     throw error

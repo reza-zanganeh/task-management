@@ -3,9 +3,9 @@ const {
   resposeHandler,
   internalServerErrorHandler,
 } = require("./responseHandler")
-const { Created, BadRequest } = require("./HttpResponse")
+const { Created, BadRequest, Ok } = require("./HttpResponse")
 
-const { create, update, remove } = require("./prisma")
+const { create, update, remove, readOne } = require("./prisma")
 
 const createController = async (
   MODELNAME,

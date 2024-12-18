@@ -1,5 +1,6 @@
 const { empty, invalid, limitLegth } = require("./validationMessage")
 const { readOne } = require("../helper/prisma")
+const { isValidDate } = require("./Functions")
 
 module.exports.email = (location) => ({
   in: [location],
@@ -84,6 +85,27 @@ module.exports.isBoolean = (fieldName, location, notExistsErrormsg = null) => ({
   },
 })
 
+module.exports.isString = (fieldName, location, checkIsExists = true) => ({
+  in: [location],
+  ...(checkIsExists && {
+    exists: {
+      bail: true,
+      options: {
+        checkNull: true,
+      },
+      errorMessage: empty(fieldName),
+      checkNull: true,
+    },
+  }),
+  isString: {
+    bail: true,
+    errorMessage: invalid(fieldName),
+    options: {
+      strict: true,
+    },
+  },
+})
+
 module.exports.isDecimal = (fieldName, location) => ({
   in: [location],
   exists: {
@@ -104,18 +126,25 @@ module.exports.isDecimal = (fieldName, location) => ({
   },
 })
 
-module.exports.inArray = (fieldName, location, array) => ({
+module.exports.inArray = (
+  fieldName,
+  location,
+  array,
+  checkIsExists = true
+) => ({
   in: [location],
-  exists: {
-    bail: true,
-    options: {
+  ...(checkIsExists && {
+    exists: {
+      bail: true,
+      options: {
+        checkNull: true,
+      },
+      errorMessage: empty(fieldName),
       checkNull: true,
     },
-    errorMessage: empty(fieldName),
-    checkNull: true,
-  },
+  }),
   custom: {
-    options: (value) => array.includes(value),
+    options: (value) => array.includes(value) || (!checkIsExists && !value),
     errorMessage: `باشد [ ${array.join(" , ")} ] ${fieldName} باید جزو `,
   },
 })
@@ -162,7 +191,7 @@ module.exports.isGreateThan = (
     },
   }),
   custom: {
-    options: (value) => value >= min,
+    options: (value) => value >= min || !value,
     errorMessage: `مقدار ${fieldName} باید بزرگتر از ${min} باشد`,
   },
 })
@@ -222,30 +251,30 @@ module.exports.isForwardDate = (fieldName, location) => ({
     errorMessage: empty(fieldName),
     checkNull: true,
   },
-  isDate: {
-    bail: true,
-    errorMessage: invalid(fieldName),
-    options: {
-      strict: true,
-    },
-  },
   custom: {
     options: (date) => {
+      if (!isValidDate(date))
+        return Promise.reject(" تاریخ وارد شده معتبر نمی باشد")
       const now = new Date()
-      if (new Date(date) <= now) return false
+      if (new Date(date) <= now)
+        return Promise.reject("تاریخ وارد شده برای گذشته می باشد")
       return true
     },
-    errorMessage: "تاریخ وارد شده برای گذشته می باشد",
   },
 })
 
-module.exports.isDate = (fieldName, location) => ({
+module.exports.isDate = (fieldName, location, checkIsExists = true) => ({
   in: [location],
-  isDate: {
-    bail: true,
-    errorMessage: invalid(fieldName),
-    options: {
-      strict: true,
+  ...(!checkIsExists && {
+    optional: {
+      options: { nullable: true, checkFalsy: true },
+    },
+  }),
+  custom: {
+    options: (date) => {
+      if (!isValidDate(date))
+        return Promise.reject(" تاریخ وارد شده معتبر نمی باشد")
+      return true
     },
   },
 })

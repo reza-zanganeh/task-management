@@ -1,13 +1,13 @@
 const { internalServerErrorHandler } = require("../helper/responseHandler")
 const { modelName } = require("../../config/constant")
 const { createError } = require("../helper/Functions")
-const { BadRequest } = require("../helper/HttpResponse")
+const { BadRequest, Forbidden } = require("../helper/HttpResponse")
 const { readOne } = require("../helper/prisma")
-const { taskModelName } = modelName
+const { taskModelName, userModelName } = modelName
 
 module.exports.hasAccessToTask = async (req, res, next) => {
   try {
-    const { id: userId } = req.user
+    const { id: userId } = req[userModelName.english]
 
     const taskId = req.body?.taskId || req.params?.id || req.query?.id
 
@@ -19,7 +19,7 @@ module.exports.hasAccessToTask = async (req, res, next) => {
 
     if (!task) return next(createError(BadRequest("تسک مورد نظر یافت نشد")))
 
-    if (task.authorId !== userId) next(createError(Forbidden()))
+    if (task.userId !== userId) next(createError(Forbidden()))
 
     req[taskModelName.english] = task
 

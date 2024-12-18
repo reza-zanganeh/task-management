@@ -69,3 +69,30 @@ module.exports.compareUserPassword = async (passOne, passTwo) => {
     throw error
   }
 }
+
+module.exports.isValidDate = (dateString) => {
+  const isoFormatRegex = /^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}\.\d{3}Z)?$/
+  if (!isoFormatRegex.test(dateString)) {
+    return false // اگر فرمت معتبر نیست
+  }
+
+  // بررسی معتبر بودن تاریخ با Date
+  const date = new Date(dateString)
+  // اگر تاریخ نامعتبر باشد (مثلاً 2024-02-30)
+  if (isNaN(date.getTime())) {
+    return false
+  }
+
+  // بررسی سازگاری فرمت کامل برای جلوگیری از تغییرات غیرمنتظره
+  if (dateString.includes("T")) {
+    return date.toISOString() === dateString // اگر فرمت زمان دارد، باید دقیقاً مطابق باشد
+  } else {
+    // اگر فقط تاریخ است، بررسی کنیم که تاریخ معتبر باشد و با فرمت YYYY-MM-DD سازگار باشد
+    const [year, month, day] = dateString.split("-").map(Number)
+    return (
+      date.getUTCFullYear() === year &&
+      date.getUTCMonth() === month - 1 &&
+      date.getUTCDate() === day
+    )
+  }
+}
