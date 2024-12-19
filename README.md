@@ -31,7 +31,7 @@
 
 - [Node.js](https://nodejs.org/) (نسخه v16.x یا جدیدتر پیشنهاد می‌شود) ([آموزش نصب Node.js](https://nodejs.org/en/download/))
 - [npm](https://www.npmjs.com/) ([آموزش نصب npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm))
-- [PostgreSQL](https://www.postgresql.org/) ([آموزش نصب PostgreSQL](https://www.postgresql.org/download/))
+- [PgAdmin](https://www.pgadmin.org/download/pgadmin-4-windows/) ([آموزش نصب PgAdmin](https://www.postgresql.org/download/))
 - [Redis](https://redis.io/) ([آموزش نصب Redis](https://redis.io/docs/getting-started/))
 
 ---
@@ -88,20 +88,13 @@ npm install
 
 ### تنظیمات برای ویندوز
 
-1. اطمینان حاصل کنید که PostgreSQL و Redis روی ویندوز نصب و در حال اجرا هستند:
+1. اطمینان حاصل کنید که Redis روی ویندوز نصب و در حال اجرا است:
 
-   - [آموزش نصب PostgreSQL روی ویندوز](https://www.postgresql.org/download/windows/)
    - [آموزش نصب Redis روی ویندوز](https://redis.io/docs/getting-started/installation/install-redis-on-windows/)
 
-2. برای اجرای PostgreSQL، می‌توانید از ابزار **pgAdmin** استفاده کنید و یک پایگاه داده جدید با نام `task-management` ایجاد کنید.
+2. برای ایجاد پایگاه داده می‌توانید از ابزار **pgAdmin** استفاده کنید و یک پایگاه داده جدید با نام `task-management` ایجاد کنید.
 
-3. Redis را با استفاده از کامند زیر اجرا کنید:
-
-   ```cmd
-   redis-server
-   ```
-
-4. اطمینان حاصل کنید که متغیرهای محیطی در فایل `.env` درست تنظیم شده باشند.
+3. اطمینان حاصل کنید که متغیرهای محیطی در فایل `.env` درست تنظیم شده باشند.
 
 ### اجرای سرور
 
@@ -182,6 +175,5 @@ npm run dev
 ## نکات
 
 - فایل کالکشن Postman در مخزن موجود است برای تست API‌ها. آن را در Postman ایمپورت کنید تا به‌سرعت تمامی مسیرها را تست کنید.
-- اگر روی ویندوز هستید و با مشکلی مواجه شدید، اطمینان حاصل کنید که Redis و PostgreSQL به درستی اجرا شده باشند و از ابزارهایی مانند **pgAdmin** و **Redis Desktop Manager** برای مدیریت استفاده کنید.
 
 ---

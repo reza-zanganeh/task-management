@@ -11,7 +11,11 @@ if (process.env.NODE_ENV == "production") {
 }
 
 client.on("error", (err) => {
-  console.log(err)
+  console.log(
+    "Please check that the Redis server is running\n",
+    "redis error :>> \n",
+    err
+  )
   process.exit()
 })
 
