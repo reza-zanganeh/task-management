@@ -1,0 +1,361 @@
+{
+	"info": {
+		"_postman_id": "088f95bb-206d-4f20-8c9a-cc4f4ddf8f90",
+		"name": "task-management",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16974808",
+		"_collection_link": "https://gold-zodiac-365261.postman.co/workspace/MyProject~8f15e80f-083c-4784-ba8f-95c90ce0781b/collection/16974808-088f95bb-206d-4f20-8c9a-cc4f4ddf8f90?action=share&source=collection_link&creator=16974808"
+	},
+	"item": [
+		{
+			"name": "user(authentication)",
+			"item": [
+				{
+					"name": "requestToLoginOrRegister",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"phonenumber\": \"09391825987\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/user/login_or_register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								"login_or_register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "otptoken",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZW51bWJlciI6IjA5MzkxODI1OTg3IiwiaWF0IjoxNzM0NTAzNjU3LCJleHAiOjE3MzQ1MDM4OTd9.MCpU7OQtUN-7diiuiE5zpFSicmDyeXNLiA1mMszWVBg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\":\"50b774\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/user/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "otptoken",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZW51bWJlciI6IjA5MzkxODI1OTg3IiwiaXNVc2VyRXhpc3RzIjp0cnVlLCJpYXQiOjE3MzQ0MzIwMDEsImV4cCI6MTczNDQzMjI0MX0.Peh-hLK2L-C2sMgO3wkkdaivgUIU5IcCRltK6_GeX0c",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fullname\":\"رضا زنگنه ثانی\",\r\n    \"password\":\"09391825987\",\r\n    \"otpCode\": \"57073\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/user/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forgetPassword",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "otptoken",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZW51bWJlciI6IjA5MzkxODI1OTg3IiwiaWF0IjoxNzM0NDM2OTg0LCJleHAiOjE3MzQ0MzcyMjR9.UeLoGjDtc1mr8Vy7qiZ-H0_u-O6hr04JgsDZvCqLuCU",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"phonenumber\":\"newPassword09391825987\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/user/forget-password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								"forget-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "changePassword",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZnVsbG5hbWUiOiLYsdi22Kcg2LLZhtqv2YbZhyDYq9in2YbbjCIsInBob25lbnVtYmVyIjoiMDkzOTE4MjU5ODciLCJpYXQiOjE3MzQ0MzcwNTYsImV4cCI6MTczNDUyMzQ1Nn0.A8aiBZL4XNNR0tp-zRsVsK3bH7pxULQf7scxUVdW7fA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"newPassword\":\"09391825987\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/user/change-password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								"change-password"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "task",
+			"item": [
+				{
+					"name": "createTask",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZnVsbG5hbWUiOiLYsdi22Kcg2LLZhtqv2YbZhyDYq9in2YbbjCIsInBob25lbnVtYmVyIjoiMDkzOTE4MjU5ODciLCJpYXQiOjE3MzQ1MDM4MTQsImV4cCI6MTczNDU5MDIxNH0.kROr93utHFw3MZcpNG6E7UGt6d_oF9tWA5TVHSaQQQA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\":\"تسک 20\",\r\n    \"description\":\"توضیحات تسک دو\",\r\n    \"deadline\":\"2024-12-31T00:00:00.000Z\",\r\n    \"status\":\"InProgress\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/task",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"task"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTaskById",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZnVsbG5hbWUiOiLYsdi22Kcg2LLZhtqv2YbZhyDYq9in2YbbjCIsInBob25lbnVtYmVyIjoiMDkzOTE4MjU5ODciLCJpYXQiOjE3MzQ1MDM4MTQsImV4cCI6MTczNDU5MDIxNH0.kROr93utHFw3MZcpNG6E7UGt6d_oF9tWA5TVHSaQQQA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/task/12",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"task",
+								"12"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTasks",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZnVsbG5hbWUiOiLYsdi22Kcg2LLZhtqv2YbZhyDYq9in2YbbjCIsInBob25lbnVtYmVyIjoiMDkzOTE4MjU5ODciLCJpYXQiOjE3MzQ1MDM4MTQsImV4cCI6MTczNDU5MDIxNH0.kROr93utHFw3MZcpNG6E7UGt6d_oF9tWA5TVHSaQQQA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/task?status=InProgress&sortKey=created_at&order=desc&limit=5&page=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"task"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "InProgress"
+								},
+								{
+									"key": "sortKey",
+									"value": "created_at"
+								},
+								{
+									"key": "order",
+									"value": "desc"
+								},
+								{
+									"key": "limit",
+									"value": "5"
+								},
+								{
+									"key": "page",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateTask",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/task",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"task"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteTask",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZnVsbG5hbWUiOiLYsdi22Kcg2LLZhtqv2YbZhyDYq9in2YbbjCIsInBob25lbnVtYmVyIjoiMDkzOTE4MjU5ODciLCJpYXQiOjE3MzQ1MDM4MTQsImV4cCI6MTczNDU5MDIxNH0.kROr93utHFw3MZcpNG6E7UGt6d_oF9tWA5TVHSaQQQA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/task/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"task",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
