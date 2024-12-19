@@ -48,7 +48,7 @@
 2. یک فایل `.env` در دایرکتوری اصلی ایجاد کنید و مقادیر زیر را وارد کنید:
 
    ```env
-   DATABASE_URL="postgresql://postgres:root@localhost:5432/mydb?schema=public"
+   DATABASE_URL="postgresql://postgres:root@localhost:5432/task-management?schema=public"
    REDIS_HOST="127.0.0.1"
    REDIS_PORT="6379"
    PORT=3000
@@ -68,17 +68,19 @@ npm install
 
 ## راه‌اندازی پایگاه داده
 
-1. طرح‌واره Prisma را آماده کنید:
+1. ایجاد پایگاه داده:
+   پیشنهاد می‌شود از ابزار **pgAdmin** برای ایجاد پایگاه داده استفاده کنید:
+
+   - یک پایگاه داده جدید با نام `task-management` ایجاد کنید.
+
+2. اجرای دستورات Prisma برای تنظیم پایگاه داده و ایجاد جداول:
 
    ```bash
+   npx prisma db push
    npx prisma generate
    ```
 
-2. مهاجرت‌ها را اجرا کنید تا ساختار پایگاه داده تنظیم شود:
-
-   ```bash
-   npx prisma migrate dev
-   ```
+   این دستورات به ترتیب اسکیماها را تولید و جداول را در پایگاه داده ایجاد می‌کنند.
 
 ---
 
@@ -91,7 +93,7 @@ npm install
    - [آموزش نصب PostgreSQL روی ویندوز](https://www.postgresql.org/download/windows/)
    - [آموزش نصب Redis روی ویندوز](https://redis.io/docs/getting-started/installation/install-redis-on-windows/)
 
-2. برای اجرای PostgreSQL، می‌توانید از ابزار **pgAdmin** استفاده کنید و یک پایگاه داده جدید با نام `mydb` ایجاد کنید.
+2. برای اجرای PostgreSQL، می‌توانید از ابزار **pgAdmin** استفاده کنید و یک پایگاه داده جدید با نام `task-management` ایجاد کنید.
 
 3. Redis را با استفاده از کامند زیر اجرا کنید:
 
@@ -181,3 +183,5 @@ npm run dev
 
 - فایل کالکشن Postman در مخزن موجود است برای تست API‌ها. آن را در Postman ایمپورت کنید تا به‌سرعت تمامی مسیرها را تست کنید.
 - اگر روی ویندوز هستید و با مشکلی مواجه شدید، اطمینان حاصل کنید که Redis و PostgreSQL به درستی اجرا شده باشند و از ابزارهایی مانند **pgAdmin** و **Redis Desktop Manager** برای مدیریت استفاده کنید.
+
+---
