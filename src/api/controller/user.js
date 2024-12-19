@@ -330,7 +330,7 @@ module.exports.forgetPassword = async (req, res, next) => {
 
 module.exports.changePassword = async (req, res, next) => {
   try {
-    const userId = req.user.id
+    const userId = req[userModelName.english].id
     const { newPassword } = req.body
 
     const newHashedPassword = await hashUserPassword(newPassword)
@@ -341,11 +341,7 @@ module.exports.changePassword = async (req, res, next) => {
       { password: newHashedPassword }
     )
 
-    resposeHandler(
-      res,
-      {},
-      Ok({ operationName: "رمز عبور شما با موفقیت تغییر کرد" })
-    )
+    resposeHandler(res, {}, Ok({ operationName: "تغییر رمز عبور" }))
   } catch (error) {
     internalServerErrorHandler(next, error)
   }

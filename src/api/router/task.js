@@ -20,15 +20,6 @@ const { readTasks } = require("../controller/task")
 
 const taskRouter = express.Router()
 
-taskRouter.get(
-  "/",
-  checkSchema(readTaskSV),
-  expressValidationResultHandler,
-  readTasks
-)
-
-taskRouter.get("/:id", hasAccessToTask, readTaskById)
-
 taskRouter.post(
   "/",
   checkSchema(createTaskSV),
@@ -39,6 +30,15 @@ taskRouter.post(
     true
   )
 )
+
+taskRouter.get(
+  "/",
+  checkSchema(readTaskSV),
+  expressValidationResultHandler,
+  readTasks
+)
+
+taskRouter.get("/:id", hasAccessToTask, readTaskById)
 
 taskRouter.delete(
   "/:id",
@@ -57,9 +57,3 @@ taskRouter.patch(
 )
 
 module.exports.taskRouter = taskRouter
-
-// update
-// status
-// title
-// descrition
-// deadline
