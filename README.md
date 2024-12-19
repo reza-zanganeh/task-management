@@ -32,7 +32,7 @@
 - [Node.js](https://nodejs.org/) (نسخه v16.x یا جدیدتر پیشنهاد می‌شود) ([آموزش نصب Node.js](https://nodejs.org/en/download/))
 - [npm](https://www.npmjs.com/) ([آموزش نصب npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm))
 - [PgAdmin](https://www.pgadmin.org/download/pgadmin-4-windows/) ([آموزش نصب PgAdmin](https://www.postgresql.org/download/))
-- [Redis](https://redis.io/) ([آموزش نصب Redis](https://redis.io/docs/getting-started/))
+- [Redis](https://redis.io/) ([آموزش نصب Redis](https://www.youtube.com/watch?v=188Fy-oCw4w))
 
 ---
 
