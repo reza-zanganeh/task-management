@@ -7,10 +7,7 @@ if (process.env.NODE_ENV == "production") {
     url: process.env.REDIS_URL,
   })
 } else {
-  client = redis.createClient(
-    projectConfig.redis.host,
-    projectConfig.redis.port
-  )
+  client = redis.createClient(process.env.REDIS_HOST, process.env.REDIS_PORT)
 }
 
 client.on("error", (err) => {
