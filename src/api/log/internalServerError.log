@@ -1,0 +1,55 @@
+
+ ================== ۱۴۰۳-۱۰-۰۱ ۱۱:۱۷:۱۱ ق ظ ================== 
+
+Invalid `task.findMany()` invocation in
+G:\Programing\TaskManagement\src\api\controller\task.js:41:38
+
+  38 
+  39 const skip = (page - 1) * limit
+  40 
+→ 41 const selectedTasks = await task.findMany({
+       where: {
+         userId: 3,
+         status: "InProgress",
+         deadline: {
+           gte: "2024-12-3100:00:00.000Z"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~
+         }
+       },
+       orderBy: {
+         deadline: "desc"
+       },
+       skip: 5,
+       take: 5
+     })
+
+Invalid value for argument `gte`: input contains invalid characters. Expected ISO-8601 DateTime.
+ ================== ۱۴۰۳-۱۰-۰۱ ۱۱:۲۰:۴۴ ق ظ ================== 
+Cannot read properties of undefined (reading 'gte')
+ ================== ۱۴۰۳-۱۰-۰۱ ۱۱:۲۰:۴۷ ق ظ ================== 
+Cannot read properties of undefined (reading 'gte')
+ ================== ۱۴۰۳-۱۰-۰۱ ۱۱:۲۷:۵۴ ق ظ ================== 
+
+Invalid `prisma[modelName].findMany()` invocation in
+G:\Programing\TaskManagement\src\api\helper\prisma.js:29:44
+
+  26 
+  27 module.exports.readAll = async (modelName, query) => {
+  28   try {
+→ 29     const result = await prisma[modelName].findMany({
+           where: {
+             userId: 3,
+             status: "Pending",
+             deadline: {
+               lte: "2025-01-10"
+                    ~~~~~~~~~~~~
+             }
+           },
+           orderBy: {
+             deadline: "asc"
+           },
+           take: 5,
+           skip: 0
+         })
+
+Invalid value for argument `lte`: premature end of input. Expected ISO-8601 DateTime.

@@ -25,10 +25,13 @@ module.exports.readTasks = async (req, res, next) => {
 
     if (status) where["status"] = status
 
-    if (deadline) {
-      if (deadline.gte) where["deadline"] = { gte: deadline.gte }
-      if (deadline.lte) where["deadline"] = { lte: deadline.lte }
-    }
+    if (deadline?.gte && deadline?.lte)
+      where["deadline"] = {
+        gte: new Date(deadline.gte),
+        lte: new Date(deadline.lte),
+      }
+    else if (deadline?.gte) where["deadline"] = { gte: new Date(deadline.gte) }
+    else if (deadline?.lte) where["deadline"] = { lte: new Date(deadline.lte) }
 
     if (sortKey && order) orderBy[`${sortKey}`] = order
 

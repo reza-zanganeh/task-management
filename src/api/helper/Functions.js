@@ -2,10 +2,6 @@ const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 const projectConfig = require("../../config/index")
 
-module.exports.createRandomNumber = (min, max) => {
-  return Math.floor(Math.random() * (max - min + 1)) + min
-}
-
 module.exports.createError = ({ statusCode, message }) => {
   const error = new Error()
   error.statusCode = statusCode
@@ -45,13 +41,6 @@ module.exports.convertSecondToMinAndScond = (time) => {
   }
 }
 
-module.exports.sumOfArrayElements = (numbers) => {
-  return numbers.reduce(
-    (previousValue, currentValue) => previousValue + currentValue,
-    0
-  )
-}
-
 module.exports.hashUserPassword = async (password) => {
   try {
     const hashedPass = await bcrypt.hash(password, 10)
@@ -73,21 +62,17 @@ module.exports.compareUserPassword = async (passOne, passTwo) => {
 module.exports.isValidDate = (dateString) => {
   const isoFormatRegex = /^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}\.\d{3}Z)?$/
   if (!isoFormatRegex.test(dateString)) {
-    return false // اگر فرمت معتبر نیست
+    return false
   }
 
-  // بررسی معتبر بودن تاریخ با Date
   const date = new Date(dateString)
-  // اگر تاریخ نامعتبر باشد (مثلاً 2024-02-30)
   if (isNaN(date.getTime())) {
     return false
   }
 
-  // بررسی سازگاری فرمت کامل برای جلوگیری از تغییرات غیرمنتظره
   if (dateString.includes("T")) {
-    return date.toISOString() === dateString // اگر فرمت زمان دارد، باید دقیقاً مطابق باشد
+    return date.toISOString() === dateString
   } else {
-    // اگر فقط تاریخ است، بررسی کنیم که تاریخ معتبر باشد و با فرمت YYYY-MM-DD سازگار باشد
     const [year, month, day] = dateString.split("-").map(Number)
     return (
       date.getUTCFullYear() === year &&

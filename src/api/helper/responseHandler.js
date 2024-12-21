@@ -25,7 +25,6 @@ module.exports.internalServerErrorHandler = (next, error) => {
       if (error) console.log(error)
     }
   )
-  // send sms to programmer
   if (next) next(createError(InternalServerError()))
 }
 
